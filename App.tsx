@@ -17,14 +17,15 @@ import {
   Text,
   View,
 } from 'react-native';
-import CoinDetailedScreen from './src/screens/CoinDetailedScreen';
 
-import HomeScreen from './src/screens/HomeScreen';
+import {CoinDetailedScreen} from './src/screens/CoinDetailedScreen';
+
+import {HomeScreen} from './src/screens/HomeScreen';
 
 const App = () => {
   return (
     <View style={styles.container}>
-      <CoinDetailedScreen />
+      <HomeScreen />
     </View>
   );
 };
