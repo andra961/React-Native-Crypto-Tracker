@@ -11,17 +11,19 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {FlatList, Image, StatusBar, StyleSheet, Text, View} from 'react-native';
-import Navigation from './src/navigation';
+import Navigation from './navigation';
 
-import WatchlistProvider from './src/contexts/WatchlistContext';
+import WatchlistProvider from './contexts/WatchlistContext';
 
 import {RecoilRoot} from 'recoil';
+import COLORS from './constants/colors';
 
 const App = () => {
   return (
     <NavigationContainer theme={{colors: {background: '#121212'}} as any}>
       <RecoilRoot>
         <WatchlistProvider>
+          <StatusBar backgroundColor={COLORS.BACKGROUND} />
           <View style={styles.container}>
             <Navigation />
           </View>

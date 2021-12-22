@@ -20,7 +20,9 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Navigation = () => {
   return (
-    <Stack.Navigator initialRouteName="Root">
+    <Stack.Navigator
+      initialRouteName="Root"
+      screenOptions={{animation: 'slide_from_right'}}>
       <Stack.Screen
         name={'Root'}
         component={BottomTabNavigator}

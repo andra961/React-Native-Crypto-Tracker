@@ -39,7 +39,12 @@ const WatchListScreen = () => {
     fetchWatchListedCoins();
   }, [watchListCoinsIds]);
 
-  if (loading || !coins) return <ActivityIndicator size={'large'} />;
+  if (loading || !coins)
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size={'large'} />
+      </View>
+    );
 
   return (
     <FlatList

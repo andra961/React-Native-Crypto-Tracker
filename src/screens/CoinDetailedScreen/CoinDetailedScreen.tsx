@@ -79,7 +79,11 @@ const CoinDetailedScreen = () => {
   };
 
   if (loading || !coin || !coinMarketData)
-    return <ActivityIndicator size={'large'} />;
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size={'large'} />
+      </View>
+    );
 
   const {
     id,
