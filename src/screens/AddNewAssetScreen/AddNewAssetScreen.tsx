@@ -11,6 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {NavigateScreenProps} from '../../navigation';
+import COLORS from '../../constants/colors';
 
 const AddNewAssetScreen = () => {
   const [allCoins, setAllCoins] = useState([]);
@@ -87,7 +88,7 @@ const AddNewAssetScreen = () => {
         itemTextStyle={styles.itemText}
         resetValue={false}
         placeholder={selectedCoin?.name || 'Select a coin...'}
-        placeholderTextColor="white"
+        placeholderTextColor={COLORS.PRIMARY}
         textInputProps={{
           underlineColorAndroid: 'transparent',
           style: styles.textInput,
@@ -98,7 +99,7 @@ const AddNewAssetScreen = () => {
           <View style={styles.boughtQuantityContainer}>
             <View style={{flexDirection: 'row'}}>
               <TextInput
-                style={{color: 'white', fontSize: 90, padding: 0}}
+                style={{color: COLORS.PRIMARY, fontSize: 90, padding: 0}}
                 value={boughtAssetQuantity}
                 keyboardType="numeric"
                 onChangeText={setBoughtAssetQuantity}
@@ -114,14 +115,18 @@ const AddNewAssetScreen = () => {
           <Pressable
             style={{
               ...styles.buttonContainer,
-              backgroundColor: isQuantityEntered() ? '#303030' : '#4169E1',
+              backgroundColor: isQuantityEntered()
+                ? COLORS.GREY_DISABLED
+                : COLORS.BLUE,
             }}
             onPress={onAddNewAsset}
             disabled={isQuantityEntered()}>
             <Text
               style={{
                 ...styles.buttonText,
-                color: isQuantityEntered() ? 'grey' : 'white',
+                color: isQuantityEntered()
+                  ? COLORS.DEFAULT_GREY
+                  : COLORS.PRIMARY,
               }}>
               Add New Asset
             </Text>

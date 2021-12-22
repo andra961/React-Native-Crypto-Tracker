@@ -4,6 +4,7 @@ import {View, Text, FlatList, RefreshControl} from 'react-native';
 import cryptocurrencies from '../../../assets/data/cryptocurrencies.json';
 
 import CoinItem from '../../components/CoinItem';
+import COLORS from '../../constants/colors';
 import {getMarketData} from '../../services/requests';
 
 const HomeScreen = () => {
@@ -42,7 +43,7 @@ const HomeScreen = () => {
       refreshControl={
         <RefreshControl
           refreshing={loading}
-          tintColor="white"
+          tintColor={COLORS.PRIMARY}
           onRefresh={refetchCoins}
         />
       }

@@ -1,30 +1,31 @@
 import {StyleSheet} from 'react-native';
+import COLORS from '../../constants/colors';
 
 const styles = StyleSheet.create({
   title: {
-    color: 'white',
+    color: COLORS.PRIMARY,
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 3,
   },
   text: {
-    color: 'white',
+    color: COLORS.PRIMARY,
     marginRight: 5,
   },
   coinContainer: {
     flexDirection: 'row',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#282828',
+    borderBottomColor: COLORS.SEPARATOR,
     padding: 15,
   },
 
   rank: {
     fontWeight: 'bold',
-    color: 'white',
+    color: COLORS.PRIMARY,
   },
 
   rankContainer: {
-    backgroundColor: '#585858',
+    backgroundColor: COLORS.RANK,
     paddingHorizontal: 5,
     borderRadius: 5,
     marginRight: 5,

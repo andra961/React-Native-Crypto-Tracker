@@ -11,6 +11,7 @@ import {useWatchList} from '../../contexts/WatchlistContext';
 import CoinItem from '../../components/CoinItem';
 
 import {getWatchListedCoins} from '../../services/requests';
+import COLORS from '../../constants/colors';
 
 const WatchListScreen = () => {
   const {watchListCoinsIds} = useWatchList();
@@ -55,7 +56,7 @@ const WatchListScreen = () => {
           refreshControl={
             <RefreshControl
               refreshing={loading}
-              tintColor="white"
+              tintColor={COLORS.PRIMARY}
               onRefresh={fetchWatchListedCoins}
             />
           }

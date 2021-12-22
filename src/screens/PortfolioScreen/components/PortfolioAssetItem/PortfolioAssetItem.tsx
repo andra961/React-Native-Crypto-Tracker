@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, Image} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import COLORS from '../../../../constants/colors';
 
 import styles from './styles';
 
@@ -37,12 +38,12 @@ const PortfolioAssetItem = ({assetItem}: any) => {
           <AntDesign
             name={isChangePositive() ? 'caretup' : 'caretdown'}
             size={12}
-            color={isChangePositive() ? '#16c784' : '#ea3943'}
+            color={isChangePositive() ? COLORS.GREEN : COLORS.RED}
             style={{alignSelf: 'center', marginRight: 5}}
           />
           <Text
             style={{
-              color: isChangePositive() ? '#16c784' : '#ea3943',
+              color: isChangePositive() ? COLORS.GREEN : COLORS.RED,
               fontWeight: '600',
             }}>
             {priceChangePercentage}%

@@ -1,14 +1,15 @@
 import {StyleSheet} from 'react-native';
+import COLORS from '../../../../constants/colors';
 
 const styles = StyleSheet.create({
   title: {
-    color: 'white',
+    color: COLORS.PRIMARY,
     fontSize: 16,
     fontWeight: 'bold',
     alignSelf: 'flex-end',
   },
   ticker: {
-    color: 'grey',
+    color: COLORS.DEFAULT_GREY,
     fontWeight: '700',
   },
   coinContainer: {

@@ -2,7 +2,7 @@ const COLORS = {
   PRIMARY: '#FFFFFF',
   BACKGROUND: '#121212',
 
-  SEPRATOR: '#282828',
+  SEPARATOR: '#282828',
 
   TAB_BAR: '#181818',
 
@@ -19,6 +19,8 @@ const COLORS = {
 
   GREY: '#1e1e1e',
   GREY_DISABLED: '#303030',
+
+  DEFAULT_GREY: '#808080',
 };
 
 export default COLORS;

@@ -1,13 +1,14 @@
 import {StyleSheet} from 'react-native';
+import COLORS from '../../../../constants/colors';
 
 const styles = StyleSheet.create({
   currentBalance: {
-    color: 'white',
+    color: COLORS.PRIMARY,
     fontWeight: '600',
     fontSize: 15,
   },
   currentBalanceValue: {
-    color: 'white',
+    color: COLORS.PRIMARY,
     fontSize: 40,
     fontWeight: '700',
     letterSpacing: 1,
@@ -19,7 +20,7 @@ const styles = StyleSheet.create({
   },
 
   percentageChange: {
-    color: 'white',
+    color: COLORS.PRIMARY,
     fontWeight: '600',
     fontSize: 17,
   },
@@ -35,14 +36,14 @@ const styles = StyleSheet.create({
 
   priceChangePercentageContainer: {
     flexDirection: 'row',
-    backgroundColor: '#16c784',
+    backgroundColor: COLORS.GREEN,
     paddingHorizontal: 3,
     paddingVertical: 8,
     borderRadius: 5,
   },
 
   assetsLabel: {
-    color: 'white',
+    color: COLORS.PRIMARY,
     fontSize: 23,
     fontWeight: '700',
     paddingVertical: 20,
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
   },
 
   buttonContainer: {
-    backgroundColor: '#4169E1',
+    backgroundColor: COLORS.BLUE,
     padding: 10,
     alignItems: 'center',
     marginVertical: 25,
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    color: 'white',
+    color: COLORS.PRIMARY,
     fontSize: 17,
     fontWeight: '600',
   },

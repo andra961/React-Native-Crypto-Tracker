@@ -12,6 +12,7 @@ import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 
 import {NavigateScreenProps} from '../../navigation/Navigation';
+import COLORS from '../../constants/colors';
 
 const CoinItem = ({marketCoin}: any) => {
   const {
@@ -28,7 +29,9 @@ const CoinItem = ({marketCoin}: any) => {
   const navigation = useNavigation<NavigateScreenProps>();
 
   const percentageColor =
-    price_change_percentage_24h < 0 ? '#ea3943' : '#16c784' || 'white';
+    price_change_percentage_24h < 0
+      ? COLORS.RED
+      : COLORS.GREEN || COLORS.PRIMARY;
 
   const normalizeMarketCap = (marketCap: number) => {
     if (marketCap > 1e12) {
@@ -75,7 +78,7 @@ const CoinItem = ({marketCoin}: any) => {
       </View>
       <View style={{marginLeft: 'auto', alignItems: 'flex-end'}}>
         <Text style={styles.title}>{current_price}</Text>
-        <Text style={{color: 'white'}}>
+        <Text style={{color: COLORS.PRIMARY}}>
           MCap {normalizeMarketCap(market_cap)}{' '}
         </Text>
       </View>

@@ -8,6 +8,7 @@ import Foundation from 'react-native-vector-icons/Foundation';
 
 import WatchListScreen from '../screens/WatchListScreen';
 import PortfolioScreen from '../screens/PortfolioScreen';
+import COLORS from '../constants/colors';
 
 const Tab = createBottomTabNavigator();
 
@@ -17,10 +18,10 @@ const BottomTabNavigator = () => {
       initialRouteName="Home"
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: 'white',
-        tabBarInactiveTintColor: 'grey',
+        tabBarActiveTintColor: COLORS.PRIMARY,
+        tabBarInactiveTintColor: COLORS.DEFAULT_GREY,
         tabBarStyle: {
-          backgroundColor: '#181818',
+          backgroundColor: COLORS.TAB_BAR,
         },
       }}>
       <Tab.Screen

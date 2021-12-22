@@ -9,6 +9,7 @@ import {NavigateScreenProps} from '../../../../navigation';
 
 import styles from './styles';
 import {useWatchList} from '../../../../contexts/WatchlistContext';
+import COLORS from '../../../../constants/colors';
 
 const CoinDetailedHeader = ({
   coinId,
@@ -44,14 +45,15 @@ const CoinDetailedHeader = ({
       <Ionicons
         name="chevron-back-sharp"
         size={30}
-        color="white"
+        color={COLORS.PRIMARY}
         onPress={() => navigation.goBack()}
       />
       <View style={styles.tickerContainer}>
         <Image source={{uri: image}} style={{width: 25, height: 25}} />
         <Text style={styles.tickerTitle}>{symbol.toUpperCase()}</Text>
         <View style={styles.rankContainer}>
-          <Text style={{color: 'white', fontWeight: 'bold', fontSize: 15}}>
+          <Text
+            style={{color: COLORS.PRIMARY, fontWeight: 'bold', fontSize: 15}}>
             #{marketCapRank}
           </Text>
         </View>
@@ -59,7 +61,7 @@ const CoinDetailedHeader = ({
       <FontAwesome
         name={checkIfCoinIsWatchListed() ? 'star' : 'star-o'}
         size={25}
-        color={checkIfCoinIsWatchListed() ? '#FFBF00' : 'white'}
+        color={checkIfCoinIsWatchListed() ? COLORS.STAR : COLORS.PRIMARY}
         onPress={handleWatchListCoin}
       />
     </View>

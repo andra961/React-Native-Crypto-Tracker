@@ -1,15 +1,16 @@
 import {StyleSheet} from 'react-native';
+import COLORS from '../../constants/colors';
 
 const styles = StyleSheet.create({
   currentPrice: {
-    color: 'white',
+    color: COLORS.PRIMARY,
     fontSize: 30,
     fontWeight: '600',
     letterSpacing: 1,
   },
 
   name: {
-    color: 'white',
+    color: COLORS.PRIMARY,
     fontSize: 15,
   },
 
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
   },
 
   priceChange: {
-    color: 'white',
+    color: COLORS.PRIMARY,
     fontSize: 17,
     fontWeight: '500',
   },
@@ -31,10 +32,10 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 12,
     borderBottomWidth: 1,
-    borderBottomColor: 'white',
+    borderBottomColor: COLORS.PRIMARY,
     padding: 10,
     fontSize: 16,
-    color: 'white',
+    color: COLORS.PRIMARY,
   },
 });
 

@@ -20,7 +20,8 @@ import COLORS from './constants/colors';
 
 const App = () => {
   return (
-    <NavigationContainer theme={{colors: {background: '#121212'}} as any}>
+    <NavigationContainer
+      theme={{colors: {background: COLORS.BACKGROUND}} as any}>
       <RecoilRoot>
         <WatchlistProvider>
           <StatusBar backgroundColor={COLORS.BACKGROUND} />
@@ -36,7 +37,7 @@ const App = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#121212',
+    backgroundColor: COLORS.BACKGROUND,
   },
 });
 

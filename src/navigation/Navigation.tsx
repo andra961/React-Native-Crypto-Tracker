@@ -8,6 +8,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RouteProp} from '@react-navigation/native';
 import BottomTabNavigator from './BottomTabNavigator';
 import AddNewAssetScreen from '../screens/AddNewAssetScreen';
+import COLORS from '../constants/colors';
 
 //type defining the screens of the root navigator
 export type RootStackParamList = {
@@ -38,8 +39,8 @@ const Navigation = () => {
         component={AddNewAssetScreen}
         options={{
           title: 'Add New Asset',
-          headerStyle: {backgroundColor: '#121212'},
-          headerTintColor: 'white',
+          headerStyle: {backgroundColor: COLORS.BACKGROUND},
+          headerTintColor: COLORS.PRIMARY,
           headerTitleStyle: {
             fontWeight: 'bold',
           },

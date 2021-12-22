@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import COLORS from '../../constants/colors';
 
 const styles = StyleSheet.create({
   dropdownContainer: {
@@ -9,27 +10,27 @@ const styles = StyleSheet.create({
   item: {
     padding: 10,
     marginTop: 2,
-    backgroundColor: '#1e1e1e',
+    backgroundColor: COLORS.GREY,
     borderWidth: 1,
-    borderColor: '#444444',
+    borderColor: COLORS.GREY_BORDER,
     borderRadius: 5,
   },
 
   itemText: {
-    color: 'white',
+    color: COLORS.PRIMARY,
   },
 
   textInput: {
     padding: 12,
     borderWidth: 1.5,
-    borderColor: '#444444',
+    borderColor: COLORS.GREY_BORDER,
     borderRadius: 5,
-    backgroundColor: '#1e1e1e',
-    color: 'white',
+    backgroundColor: COLORS.GREY,
+    color: COLORS.PRIMARY,
   },
 
   ticker: {
-    color: 'grey',
+    color: COLORS.DEFAULT_GREY,
     fontWeight: '700',
     fontSize: 20,
     marginTop: 25,
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
   },
 
   buttonContainer: {
-    backgroundColor: '#4169E1',
+    backgroundColor: COLORS.BLUE,
     padding: 10,
     alignItems: 'center',
     marginVertical: 30,
@@ -52,13 +53,13 @@ const styles = StyleSheet.create({
   },
 
   buttonText: {
-    color: 'white',
+    color: COLORS.PRIMARY,
     fontSize: 17,
     fontWeight: '600',
   },
 
   pricePerCoin: {
-    color: 'grey',
+    color: COLORS.DEFAULT_GREY,
     fontWeight: '600',
     fontSize: 17,
     letterSpacing: 0.5,

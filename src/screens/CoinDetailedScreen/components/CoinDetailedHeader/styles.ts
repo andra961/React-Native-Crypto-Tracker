@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import COLORS from '../../../../constants/colors';
 
 const styles = StyleSheet.create({
   headerContainer: {
@@ -12,13 +13,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   tickerTitle: {
-    color: 'white',
+    color: COLORS.PRIMARY,
     fontWeight: 'bold',
     marginHorizontal: 5,
     fontSize: 17,
   },
   rankContainer: {
-    backgroundColor: '#585858',
+    backgroundColor: COLORS.RANK,
     paddingHorizontal: 5,
     paddingVertical: 2,
     borderRadius: 5,

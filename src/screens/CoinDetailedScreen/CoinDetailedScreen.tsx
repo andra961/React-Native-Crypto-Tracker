@@ -20,6 +20,7 @@ import {
 import {getCoinMarketChart, getDetaliedCoinData} from '../../services/requests';
 import {useRoute} from '@react-navigation/native';
 import {CoinDetailedScreenRouteProp} from '../../navigation';
+import COLORS from '../../constants/colors';
 
 const CoinDetailedScreen = () => {
   const [coin, setCoin] = useState<any>(null);
@@ -96,9 +97,12 @@ const CoinDetailedScreen = () => {
   const {prices} = coinMarketData;
 
   const percentageColor =
-    price_change_percentage_24h < 0 ? '#ea3943' : '#16c784' || 'white';
+    price_change_percentage_24h < 0
+      ? COLORS.RED
+      : COLORS.GREEN || COLORS.PRIMARY;
 
-  const chartColor = current_price.usd > prices[0][1] ? '#16c748' : '#ea3943';
+  const chartColor =
+    current_price.usd > prices[0][1] ? COLORS.GREEN : COLORS.RED;
 
   const screenWidth = Dimensions.get('window').width;
 
@@ -133,7 +137,7 @@ const CoinDetailedScreen = () => {
             <AntDesign
               name={price_change_percentage_24h < 0 ? 'caretdown' : 'caretup'}
               size={12}
-              color={'white'}
+              color={COLORS.PRIMARY}
               style={{alignSelf: 'center', marginRight: 5}}
             />
             <Text style={styles.priceChange}>
@@ -155,7 +159,7 @@ const CoinDetailedScreen = () => {
         </View>
         <View style={{flexDirection: 'row'}}>
           <View style={{flexDirection: 'row', flex: 1}}>
-            <Text style={{color: 'white', alignSelf: 'center'}}>
+            <Text style={{color: COLORS.PRIMARY, alignSelf: 'center'}}>
               {symbol.toUpperCase()}
             </Text>
             <TextInput
@@ -167,7 +171,9 @@ const CoinDetailedScreen = () => {
           </View>
 
           <View style={{flexDirection: 'row', flex: 1}}>
-            <Text style={{color: 'white', alignSelf: 'center'}}>USD</Text>
+            <Text style={{color: COLORS.PRIMARY, alignSelf: 'center'}}>
+              USD
+            </Text>
             <TextInput
               style={styles.input}
               value={usdValue}

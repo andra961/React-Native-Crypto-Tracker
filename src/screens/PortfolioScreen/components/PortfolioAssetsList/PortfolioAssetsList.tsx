@@ -8,8 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NavigateScreenProps} from '../../../../navigation/Navigation';
 import {useRecoilState, useRecoilValue} from 'recoil';
 import {allPortfolioAssets} from '../../../../atoms/PortfolioAssets';
-
-//'#ea3943' : '#16c784'
+import COLORS from '../../../../constants/colors';
 
 const PortfolioAssetsList = () => {
   const navigation = useNavigation<NavigateScreenProps>();
@@ -69,7 +68,7 @@ const PortfolioAssetsList = () => {
               <Text
                 style={{
                   ...styles.valueChange,
-                  color: isChangePositive() ? '#16c784' : '#ea3943',
+                  color: isChangePositive() ? COLORS.GREEN : COLORS.RED,
                 }}>
                 ${getCurrentValueChange()} (All Time)
               </Text>
@@ -77,12 +76,12 @@ const PortfolioAssetsList = () => {
             <View
               style={{
                 ...styles.priceChangePercentageContainer,
-                backgroundColor: isChangePositive() ? '#16c784' : '#ea3943',
+                backgroundColor: isChangePositive() ? COLORS.GREEN : COLORS.RED,
               }}>
               <AntDesign
                 name={isChangePositive() ? 'caretup' : 'caretdown'}
                 size={12}
-                color={'white'}
+                color={COLORS.PRIMARY}
                 style={{alignSelf: 'center', marginRight: 5}}
               />
               <Text style={styles.percentageChange}>
