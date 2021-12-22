@@ -1,10 +1,21 @@
 import React from 'react';
-import {Image, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  Pressable,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import styles from './styles';
+import {useNavigation} from '@react-navigation/native';
+
+import {NavigateScreenProps} from '../../navigation/Navigation';
 
 const CoinItem = ({marketCoin}: any) => {
   const {
+    id,
     name,
     current_price,
     market_cap_rank,
@@ -14,26 +25,30 @@ const CoinItem = ({marketCoin}: any) => {
     image,
   } = marketCoin;
 
+  const navigation = useNavigation<NavigateScreenProps>();
+
   const percentageColor =
-    price_change_percentage_24h < 0 ? '#ea3943' : '#16c784';
+    price_change_percentage_24h < 0 ? '#ea3943' : '#16c784' || 'white';
 
   const normalizeMarketCap = (marketCap: number) => {
-    if (marketCap > 1_000_000_000_000) {
-      return Math.floor(marketCap / 1_000_000_000_000) + ' T';
+    if (marketCap > 1e12) {
+      return Math.floor(marketCap / 1e12) + ' T';
     }
-    if (marketCap > 1_000_000_000) {
-      return Math.floor(marketCap / 1_000_000_000) + ' B';
+    if (marketCap > 1e9) {
+      return Math.floor(marketCap / 1e9) + ' B';
     }
-    if (marketCap > 1_000_000) {
-      return Math.floor(marketCap / 1_000_000) + ' M';
+    if (marketCap > 1e6) {
+      return Math.floor(marketCap / 1e6) + ' M';
     }
-    if (marketCap > 1_000) {
-      return Math.floor(marketCap / 1_000) + ' K';
+    if (marketCap > 1e3) {
+      return Math.floor(marketCap / 1e3) + ' K';
     }
   };
 
   return (
-    <View style={styles.coinContainer}>
+    <Pressable
+      style={styles.coinContainer}
+      onPress={() => navigation.navigate('CoinDetailedScreen', {coinId: id})}>
       <Image
         source={{
           uri: image,
@@ -54,7 +69,7 @@ const CoinItem = ({marketCoin}: any) => {
             style={{alignSelf: 'center', marginRight: 5}}
           />
           <Text style={{color: percentageColor}}>
-            {price_change_percentage_24h.toFixed(2)}%
+            {price_change_percentage_24h?.toFixed(2)}%
           </Text>
         </View>
       </View>
@@ -64,7 +79,7 @@ const CoinItem = ({marketCoin}: any) => {
           MCap {normalizeMarketCap(market_cap)}{' '}
         </Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

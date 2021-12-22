@@ -8,25 +8,26 @@
  * @format
  */
 
+import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {
-  FlatList,
-  Image,
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {FlatList, Image, StatusBar, StyleSheet, Text, View} from 'react-native';
+import Navigation from './src/navigation';
 
-import {CoinDetailedScreen} from './src/screens/CoinDetailedScreen';
+import WatchlistProvider from './src/contexts/WatchlistContext';
 
-import {HomeScreen} from './src/screens/HomeScreen';
+import {RecoilRoot} from 'recoil';
 
 const App = () => {
   return (
-    <View style={styles.container}>
-      <HomeScreen />
-    </View>
+    <NavigationContainer theme={{colors: {background: '#121212'}} as any}>
+      <RecoilRoot>
+        <WatchlistProvider>
+          <View style={styles.container}>
+            <Navigation />
+          </View>
+        </WatchlistProvider>
+      </RecoilRoot>
+    </NavigationContainer>
   );
 };
 

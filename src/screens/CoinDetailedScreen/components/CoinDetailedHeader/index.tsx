@@ -1,1 +1,1 @@
-export {default as CoinDetailedHeader} from './CoinDetailedHeader';
+export {default} from './CoinDetailedHeader';

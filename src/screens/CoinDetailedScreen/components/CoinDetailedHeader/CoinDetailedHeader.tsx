@@ -2,22 +2,51 @@ import React from 'react';
 import {View, Text, Image} from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
+import {useNavigation} from '@react-navigation/native';
+import {NavigateScreenProps} from '../../../../navigation';
 
 import styles from './styles';
+import {useWatchList} from '../../../../contexts/WatchlistContext';
 
 const CoinDetailedHeader = ({
+  coinId,
   image,
   symbol,
   marketCapRank,
 }: {
+  coinId: string;
   image: string;
   symbol: string;
   marketCapRank: number;
 }) => {
+  const navigation = useNavigation<NavigateScreenProps>();
+  const {watchListCoinsIds, storeWatchListCoinId, removeWatchListCoinId} =
+    useWatchList();
+
+  const checkIfCoinIsWatchListed = () => {
+    return watchListCoinsIds.some(
+      (coinIdValue: string) => coinIdValue === coinId,
+    );
+  };
+
+  const handleWatchListCoin = () => {
+    if (checkIfCoinIsWatchListed()) {
+      return removeWatchListCoinId(coinId);
+    }
+
+    return storeWatchListCoinId(coinId);
+  };
+
   return (
     <View style={styles.headerContainer}>
-      <Ionicons name="chevron-back-sharp" size={30} color="white" />
+      <Ionicons
+        name="chevron-back-sharp"
+        size={30}
+        color="white"
+        onPress={() => navigation.goBack()}
+      />
       <View style={styles.tickerContainer}>
         <Image source={{uri: image}} style={{width: 25, height: 25}} />
         <Text style={styles.tickerTitle}>{symbol.toUpperCase()}</Text>
@@ -27,7 +56,12 @@ const CoinDetailedHeader = ({
           </Text>
         </View>
       </View>
-      <EvilIcons name="user" size={30} color={'white'} />
+      <FontAwesome
+        name={checkIfCoinIsWatchListed() ? 'star' : 'star-o'}
+        size={25}
+        color={checkIfCoinIsWatchListed() ? '#FFBF00' : 'white'}
+        onPress={handleWatchListCoin}
+      />
     </View>
   );
 };

@@ -1,1 +1,1 @@
-export {default as CoinDetailedScreen} from './CoinDetailedScreen';
+export {default} from './CoinDetailedScreen';
