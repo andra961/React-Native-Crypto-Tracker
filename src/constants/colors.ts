@@ -6,8 +6,8 @@ const COLORS = {
 
   TAB_BAR: '#181818',
 
-  GREEN: '#ea3943',
-  RED: '#16c784',
+  GREEN: '#16c784',
+  RED: '#ea3943',
 
   BLUE: '#4169E1',
 
