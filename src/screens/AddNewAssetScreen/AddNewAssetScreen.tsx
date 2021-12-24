@@ -11,6 +11,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {NavigateScreenProps} from '../../navigation';
+
+import uuid from 'react-native-uuid';
 import COLORS from '../../constants/colors';
 
 const AddNewAssetScreen = () => {
@@ -26,11 +28,13 @@ const AddNewAssetScreen = () => {
 
   const navigation = useNavigation<NavigateScreenProps>();
 
-  const isQuantityEntered = () => boughtAssetQuantity === '';
+  const isQuantityEntered = () =>
+    boughtAssetQuantity === '' || parseFloat(boughtAssetQuantity) <= 0;
 
   const onAddNewAsset = async () => {
     const newAsset = {
       id: selectedCoin.id,
+      unique_id: selectedCoin.id + uuid.v4(),
       name: selectedCoin.name,
       image: selectedCoin.image.small,
       ticker: selectedCoin.symbol.toUpperCase(),

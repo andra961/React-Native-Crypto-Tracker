@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: '600',
     letterSpacing: 1,
+    padding: 0,
   },
 
   name: {
@@ -19,6 +20,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    paddingHorizontal: 25,
   },
 
   priceChange: {
@@ -36,6 +38,15 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 16,
     color: COLORS.PRIMARY,
+  },
+
+  filtersContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    backgroundColor: COLORS.SEPARATOR,
+    paddingVertical: 5,
+    borderRadius: 5,
+    marginVertical: 10,
   },
 });
 

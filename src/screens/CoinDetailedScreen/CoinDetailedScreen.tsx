@@ -7,66 +7,70 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
-import Coin from '../../../assets/data/crypto.json';
 import CoinDetailedHeader from './components/CoinDetailedHeader';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import styles from './styles';
-import {
-  ChartDot,
-  ChartPath,
-  ChartPathProvider,
-  ChartYLabel,
-} from '@rainbow-me/animated-charts';
+import {LineChart} from 'react-native-wagmi-charts';
 import {getCoinMarketChart, getDetaliedCoinData} from '../../services/requests';
 import {useRoute} from '@react-navigation/native';
 import {CoinDetailedScreenRouteProp} from '../../navigation';
 import COLORS from '../../constants/colors';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import FilteredComponent from './components/FilterComponent';
+
+interface filterDay {
+  filterDay: string;
+  filterText: string;
+}
+
+const filterDays: filterDay[] = [
+  {filterDay: '1', filterText: '24h'},
+  {filterDay: '7', filterText: '7d'},
+  {filterDay: '30', filterText: '30d'},
+  {filterDay: '365', filterText: '1y'},
+  {filterDay: 'max', filterText: 'All'},
+];
 
 const CoinDetailedScreen = () => {
   const [coin, setCoin] = useState<any>(null);
   const [coinMarketData, setCoinMarketData] = useState<any>(null);
 
+  const [loading, setLoading] = useState<boolean>(true);
+
   const [coinValue, setCoinValue] = useState<string>('1');
-  const [usdValue, setUsdValue] = useState<string>(
-    'current_price.usd.toString()',
-  );
+  const [usdValue, setUsdValue] = useState<string>('');
+  const [selectedRange, setSelectedRange] = useState<string>('1');
 
   const route = useRoute<CoinDetailedScreenRouteProp>();
   const {
     params: {coinId},
   } = route;
 
-  console.log(coinId);
-
-  const [loading, setLoading] = useState<boolean>(true);
-
   const fetchCoinData = async () => {
     setLoading(true);
     const fetchedCoinData = await getDetaliedCoinData(coinId);
     setCoin(fetchedCoinData);
-    const fetchedCoinMarketData = await getCoinMarketChart(coinId);
-    setCoinMarketData(fetchedCoinMarketData);
+
     setUsdValue(
       fetchedCoinData.market_data.current_price.usd.toFixed(2).toString(),
     );
     setLoading(false);
   };
 
+  const fetchMarketCoinData = async (selectedRangeValue: string) => {
+    //setLoading(true);
+    const fetchedCoinMarketData = await getCoinMarketChart(
+      coinId,
+      selectedRangeValue,
+    );
+    setCoinMarketData(fetchedCoinMarketData);
+    //setLoading(false);
+  };
+
   useEffect(() => {
     fetchCoinData();
+    fetchMarketCoinData('1');
   }, []);
-
-  /*const formatCurrency = (value: string) => {
-    'worklet';
-
-    if (value === '') {
-      return '$' + current_price.usd.toFixed(2);
-    }
-
-    return '$' + parseFloat(value).toFixed(2);
-  };*/
-
-  //ChartYLabel format={formatCurrency} style={styles.currentPrice}
 
   const changeCoinValue = (value: string) => {
     setCoinValue(value);
@@ -77,6 +81,11 @@ const CoinDetailedScreen = () => {
     setUsdValue(value);
     const floatValue = parseFloat(value.replace(',', '.')) || 0;
     setCoinValue((floatValue / current_price.usd).toFixed(2).toString());
+  };
+
+  const onSelectedRangeChange = (selectedRangeValue: string) => {
+    setSelectedRange(selectedRangeValue);
+    fetchMarketCoinData(selectedRangeValue);
   };
 
   if (loading || !coin || !coinMarketData)
@@ -106,15 +115,11 @@ const CoinDetailedScreen = () => {
 
   const screenWidth = Dimensions.get('window').width;
 
-  const coordinates = prices.map(([x, y]: any) => ({x, y}));
+  const coordinates = prices.map(([x, y]: any) => ({timestamp: x, value: y}));
 
   return (
-    <View style={{paddingHorizontal: 10}}>
-      <ChartPathProvider
-        data={{
-          points: coordinates,
-          smoothingStrategy: 'bezier',
-        }}>
+    <View>
+      <LineChart.Provider data={coordinates}>
         <CoinDetailedHeader
           coinId={id}
           image={small}
@@ -124,7 +129,24 @@ const CoinDetailedScreen = () => {
         <View style={styles.priceContainer}>
           <View>
             <Text style={styles.name}>{name}</Text>
-            <Text style={styles.currentPrice}>{current_price.usd}</Text>
+            <LineChart.PriceText
+              precision={8}
+              style={styles.currentPrice}
+              format={({value}) => {
+                'worklet';
+
+                let updatedvalue;
+                if (value) {
+                  updatedvalue = value;
+                } else {
+                  updatedvalue = current_price.usd;
+                }
+
+                if (updatedvalue < 1) return `$${updatedvalue}`;
+
+                return `$${parseFloat(updatedvalue).toFixed(2)}`;
+              }}
+            />
           </View>
           <View
             style={{
@@ -145,19 +167,27 @@ const CoinDetailedScreen = () => {
             </Text>
           </View>
         </View>
-        <View>
-          <ChartPath
-            height={screenWidth / 2}
-            stroke={chartColor}
-            width={screenWidth}
-          />
-          <ChartDot
-            style={{
-              backgroundColor: chartColor,
-            }}
-          />
+        <View style={styles.filtersContainer}>
+          {filterDays.map(day => (
+            <FilteredComponent
+              filterDay={day.filterDay}
+              filterText={day.filterText}
+              selectedRange={selectedRange}
+              setSelectedRange={onSelectedRangeChange}
+              key={day.filterText}
+            />
+          ))}
         </View>
-        <View style={{flexDirection: 'row'}}>
+
+        <GestureHandlerRootView>
+          <LineChart width={screenWidth} height={screenWidth / 2}>
+            <LineChart.Path color={chartColor}>
+              <LineChart.Gradient />
+            </LineChart.Path>
+            <LineChart.CursorCrosshair color={chartColor} />
+          </LineChart>
+        </GestureHandlerRootView>
+        <View style={{flexDirection: 'row', paddingHorizontal: 10}}>
           <View style={{flexDirection: 'row', flex: 1}}>
             <Text style={{color: COLORS.PRIMARY, alignSelf: 'center'}}>
               {symbol.toUpperCase()}
@@ -182,7 +212,7 @@ const CoinDetailedScreen = () => {
             />
           </View>
         </View>
-      </ChartPathProvider>
+      </LineChart.Provider>
     </View>
   );
 };

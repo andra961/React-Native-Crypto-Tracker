@@ -36,18 +36,31 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <FlatList
-      data={coins}
-      renderItem={({item}) => <CoinItem marketCoin={item} />}
-      onEndReached={() => fetchCoins(Math.floor(coins.length / 50 + 1))}
-      refreshControl={
-        <RefreshControl
-          refreshing={loading}
-          tintColor={COLORS.PRIMARY}
-          onRefresh={refetchCoins}
-        />
-      }
-    />
+    <View>
+      <Text
+        style={{
+          fontWeight: '800',
+          color: COLORS.PRIMARY,
+          fontSize: 25,
+          letterSpacing: 1,
+          paddingHorizontal: 20,
+          paddingBottom: 5,
+        }}>
+        Cryptoassets
+      </Text>
+      <FlatList
+        data={coins}
+        renderItem={({item}) => <CoinItem marketCoin={item} />}
+        onEndReached={() => fetchCoins(Math.floor(coins.length / 50 + 1))}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            tintColor={COLORS.PRIMARY}
+            onRefresh={refetchCoins}
+          />
+        }
+      />
+    </View>
   );
 };
 

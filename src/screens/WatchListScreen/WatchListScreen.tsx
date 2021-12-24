@@ -27,17 +27,16 @@ const WatchListScreen = () => {
       return;
     }
     setLoading(true);
-    const watchListedCoinsData = transformCoinsIds()
-      ? await getWatchListedCoins(transformCoinsIds())
-      : [];
-    setCoins(existingCoins => [/*...existingCoins*/ ...watchListedCoinsData]);
+    const watchListedCoinsData = await getWatchListedCoins(transformCoinsIds());
+
+    setCoins(watchListedCoinsData);
     console.log('saved coins', watchListedCoinsData);
     console.log('coins in state', coins);
     setLoading(false);
   };
 
   useEffect(() => {
-    fetchWatchListedCoins();
+    if (watchListCoinsIds.length > 0) fetchWatchListedCoins();
   }, [watchListCoinsIds]);
 
   if (loading || !coins)

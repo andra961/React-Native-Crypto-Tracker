@@ -17,6 +17,7 @@ import WatchlistProvider from './contexts/WatchlistContext';
 
 import {RecoilRoot} from 'recoil';
 import COLORS from './constants/colors';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const App = () => {
   return (

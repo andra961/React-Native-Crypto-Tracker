@@ -1,20 +1,28 @@
 import React from 'react';
 import {View, Text, FlatList, Pressable} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
 
 import PortfolioAssetItem from '../PortfolioAssetItem';
 import {useNavigation} from '@react-navigation/native';
 import {NavigateScreenProps} from '../../../../navigation/Navigation';
 import {useRecoilState, useRecoilValue} from 'recoil';
-import {allPortfolioAssets} from '../../../../atoms/PortfolioAssets';
+import {
+  allPortfolioAssets,
+  allPortfolioBoughtAssetsInStorage,
+} from '../../../../atoms/PortfolioAssets';
+
+import {SwipeListView} from 'react-native-swipe-list-view';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import COLORS from '../../../../constants/colors';
 
 const PortfolioAssetsList = () => {
   const navigation = useNavigation<NavigateScreenProps>();
   const [assets, setAssets] = useRecoilState(allPortfolioAssets);
-
-  console.log('Assets are: ', assets);
+  const [storageAssets, setStorageAssets] = useRecoilState(
+    allPortfolioBoughtAssetsInStorage,
+  );
 
   const isChangePositive = () => parseFloat(getCurrentValueChange()) >= 0;
 
@@ -33,8 +41,6 @@ const PortfolioAssetsList = () => {
       0,
     );
 
-    console.log('change:', currentBalance - boughtBalance);
-
     return (currentBalance - boughtBalance).toFixed(3);
   };
 
@@ -48,15 +54,44 @@ const PortfolioAssetsList = () => {
 
     const percentage = ((currentBalance - boughtBalance) / boughtBalance) * 100;
 
-    console.log(percentage);
-
     return isNaN(percentage) ? 0 : percentage.toFixed(2);
   };
 
+  const onDeleteAsset = async (asset: any) => {
+    const newAssets = storageAssets.filter(
+      (coin, index) => coin.unique_id !== asset.item.unique_id,
+    );
+    const jsonValue = JSON.stringify(newAssets);
+
+    await AsyncStorage.setItem('@portfolio_coins', jsonValue);
+    setStorageAssets(newAssets);
+  };
+
+  const renderDeleteButton = (data: any) => {
+    return (
+      <Pressable
+        style={{
+          flex: 1,
+          backgroundColor: COLORS.RED,
+          alignItems: 'flex-end',
+          justifyContent: 'center',
+          paddingRight: 30,
+          marginLeft: 20,
+        }}
+        onPress={() => onDeleteAsset(data)}>
+        <FontAwesome name="trash-o" size={24} color={COLORS.PRIMARY} />
+      </Pressable>
+    );
+  };
+
   return (
-    <FlatList
+    <SwipeListView
       data={assets}
       renderItem={({item}) => <PortfolioAssetItem assetItem={item} />}
+      rightOpenValue={-75}
+      disableRightSwipe
+      renderHiddenItem={data => renderDeleteButton(data)}
+      keyExtractor={({id}, index) => `${id}${index}`}
       ListHeaderComponent={
         <>
           <View style={styles.balanceContainer}>
