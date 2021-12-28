@@ -17,6 +17,7 @@
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
+    "@reduxjs/toolkit": "^1.7.1",
     "axios": "^0.24.0",
     "react": "17.0.2",
     "react-native": "0.66.4",
@@ -31,6 +32,7 @@
     "react-native-uuid": "^2.0.1",
     "react-native-vector-icons": "^9.0.0",
     "react-native-wagmi-charts": "^2.1.0",
+    "react-redux": "^7.2.6",
     "recoil": "^0.5.2"
   },
   "devDependencies": {
@@ -40,6 +42,7 @@
     "@types/jest": "^26.0.23",
     "@types/react-native": "^0.66.4",
     "@types/react-native-vector-icons": "^6.4.10",
+    "@types/react-redux": "^7.1.21",
     "@types/react-test-renderer": "^17.0.1",
     "@typescript-eslint/eslint-plugin": "^5.7.0",
     "@typescript-eslint/parser": "^5.7.0",
