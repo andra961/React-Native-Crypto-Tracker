@@ -1,5 +1,11 @@
 import React, {Suspense, useEffect, useState} from 'react';
-import {View, Text, Pressable, TextInput} from 'react-native';
+import {
+  View,
+  Text,
+  Pressable,
+  TextInput,
+  ActivityIndicator,
+} from 'react-native';
 
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import {useRecoilState} from 'recoil';
@@ -14,17 +20,31 @@ import {NavigateScreenProps} from '../../navigation';
 
 import uuid from 'react-native-uuid';
 import COLORS from '../../constants/colors';
+import {fetchBoughtAssets} from '../../redux/portfolio';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../redux/store';
 
 const AddNewAssetScreen = () => {
   const [allCoins, setAllCoins] = useState([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loadingCoins, setLoadingCoins] = useState<boolean>(false);
   const [selectedCoinId, setSelectedCoinId] = useState<string | null>(null);
   const [boughtAssetQuantity, setBoughtAssetQuantity] = useState<string>('0');
   const [selectedCoin, setSelectedCoin] = useState<any>(null);
 
-  const [assetsInStorage, setAssetsInStorage] = useRecoilState<any>(
+  //recoil state
+  /*const [assetsInStorage, setAssetsInStorage] = useRecoilState<any>(
     allPortfolioBoughtAssetsInStorage,
+  );*/
+
+  const dispatch = useDispatch();
+
+  const {boughtAssets, loading} = useSelector(
+    (state: RootState) => state.portfolio,
   );
+
+  useEffect(() => {
+    dispatch(fetchBoughtAssets());
+  }, []);
 
   const navigation = useNavigation<NavigateScreenProps>();
 
@@ -41,33 +61,35 @@ const AddNewAssetScreen = () => {
       boughtQuantity: parseFloat(boughtAssetQuantity),
       priceBought: selectedCoin.market_data.current_price.usd,
     };
-    const newAssets = [...assetsInStorage, newAsset];
+    const newAssets = [...boughtAssets, newAsset];
 
     console.log(newAssets);
     const jsonValue = JSON.stringify(newAssets);
     await AsyncStorage.setItem('@portfolio_coins', jsonValue);
-    setAssetsInStorage(newAssets);
+    //recoil state
+    //setAssetsInStorage(newAssets);
+    dispatch(fetchBoughtAssets());
     navigation.goBack();
   };
 
   const fetchAllCoins = async () => {
-    if (loading) {
+    if (loadingCoins) {
       return;
     }
-    setLoading(true);
+    setLoadingCoins(true);
     const allCoins = await getAllCoins();
     setAllCoins(allCoins);
-    setLoading(false);
+    setLoadingCoins(false);
   };
 
   const fetchCoinInfo = async () => {
-    if (loading) {
+    if (loadingCoins) {
       return;
     }
-    setLoading(true);
+    setLoadingCoins(true);
     const coinInfo = await getDetaliedCoinData(selectedCoinId!);
     setSelectedCoin(coinInfo);
-    setLoading(false);
+    setLoadingCoins(false);
   };
 
   useEffect(() => {
@@ -81,6 +103,13 @@ const AddNewAssetScreen = () => {
 
     console.log('Selected coin is:', selectedCoinId);
   }, [selectedCoinId]);
+
+  if (loading || loadingCoins || !boughtAssets)
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size={'large'} />
+      </View>
+    );
 
   return (
     <View style={{flex: 1}}>

@@ -10,27 +10,39 @@
 
 import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
-import {FlatList, Image, StatusBar, StyleSheet, Text, View} from 'react-native';
+import {StatusBar, StyleSheet, View} from 'react-native';
 import Navigation from './navigation';
+
+import {Provider} from 'react-redux';
 
 import WatchlistProvider from './contexts/WatchlistContext';
 
 import {RecoilRoot} from 'recoil';
 import COLORS from './constants/colors';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import store from './redux';
+
+//replace with this to switch to recoil state
+/*<RecoilRoot>
+  <WatchlistProvider>
+    <StatusBar backgroundColor={COLORS.BACKGROUND} />
+    <View style={styles.container}>
+      <Navigation />
+    </View>
+  </WatchlistProvider>
+</RecoilRoot>*/
 
 const App = () => {
   return (
     <NavigationContainer
       theme={{colors: {background: COLORS.BACKGROUND}} as any}>
-      <RecoilRoot>
+      <Provider store={store}>
         <WatchlistProvider>
           <StatusBar backgroundColor={COLORS.BACKGROUND} />
           <View style={styles.container}>
             <Navigation />
           </View>
         </WatchlistProvider>
-      </RecoilRoot>
+      </Provider>
     </NavigationContainer>
   );
 };

@@ -14,7 +14,7 @@ interface boughtAssets {
   priceChangePercentage: string;
 }
 
-const fetchBoughtAssets = createAsyncThunk(
+export const fetchBoughtAssets = createAsyncThunk(
   '/portfolioAssets/fetchBoughtAssets',
   async () => {
     const assetsInStorage = await AsyncStorage.getItem('@portfolio_coins');
@@ -55,7 +55,7 @@ const portfolioSlice = createSlice({
   name: 'portfolioAssets',
   initialState: {
     boughtAssets: [] as boughtAssets[],
-    loading: false,
+    loading: true,
   },
   reducers: {
     setBoughtAssets(state, action: PayloadAction<boughtAssets[]>) {
@@ -75,5 +75,7 @@ const portfolioSlice = createSlice({
     });
   },
 });
+
+export const {setBoughtAssets} = portfolioSlice.actions;
 
 export default portfolioSlice.reducer;

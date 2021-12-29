@@ -3,10 +3,9 @@ import {View, Text, FlatList, ActivityIndicator} from 'react-native';
 
 import PortfolioAssetsList from './components/PortfolioAssetsList';
 
-const PortfolioScreen = () => {
-  return (
-    <View style={{flex: 1}}>
-      <Suspense
+//wrap <PortfolioAssetsList /> with the following to switch to recoil state
+/*
+<Suspense
         fallback={
           <View
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -14,7 +13,12 @@ const PortfolioScreen = () => {
           </View>
         }>
         <PortfolioAssetsList />
-      </Suspense>
+</Suspense>*/
+
+const PortfolioScreen = () => {
+  return (
+    <View style={{flex: 1}}>
+      <PortfolioAssetsList />
     </View>
   );
 };

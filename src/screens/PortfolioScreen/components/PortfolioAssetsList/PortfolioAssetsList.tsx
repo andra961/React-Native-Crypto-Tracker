@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, FlatList, Pressable} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, Text, FlatList, Pressable, ActivityIndicator} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
@@ -13,21 +13,43 @@ import {
   allPortfolioBoughtAssetsInStorage,
 } from '../../../../atoms/PortfolioAssets';
 
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../../../redux/store';
+import {fetchBoughtAssets} from '../../../../redux/portfolio';
+
 import {SwipeListView} from 'react-native-swipe-list-view';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import COLORS from '../../../../constants/colors';
 
 const PortfolioAssetsList = () => {
   const navigation = useNavigation<NavigateScreenProps>();
-  const [assets, setAssets] = useRecoilState(allPortfolioAssets);
+  //switch to recoil state
+  /*const [assets, setAssets] = useRecoilState(allPortfolioAssets);
   const [storageAssets, setStorageAssets] = useRecoilState(
     allPortfolioBoughtAssetsInStorage,
+  );*/
+
+  const dispatch = useDispatch();
+
+  const {boughtAssets, loading} = useSelector(
+    (state: RootState) => state.portfolio,
   );
+
+  useEffect(() => {
+    dispatch(fetchBoughtAssets());
+  }, []);
+
+  if (loading || !boughtAssets)
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size={'large'} />
+      </View>
+    );
 
   const isChangePositive = () => parseFloat(getCurrentValueChange()) >= 0;
 
   const getCurrentBalance = () =>
-    assets?.reduce(
+    boughtAssets?.reduce(
       (total: any, currentAsset: any) =>
         total + currentAsset.boughtQuantity * currentAsset.currentPrice,
       0,
@@ -35,7 +57,7 @@ const PortfolioAssetsList = () => {
 
   const getCurrentValueChange = () => {
     const currentBalance = getCurrentBalance();
-    const boughtBalance = assets?.reduce(
+    const boughtBalance = boughtAssets?.reduce(
       (total: any, currentAsset: any) =>
         total + currentAsset.boughtQuantity * currentAsset.priceBought,
       0,
@@ -46,7 +68,7 @@ const PortfolioAssetsList = () => {
 
   const getCurrentPercentageChange = () => {
     const currentBalance = getCurrentBalance();
-    const boughtBalance = assets?.reduce(
+    const boughtBalance = boughtAssets?.reduce(
       (total: any, currentAsset: any) =>
         total + currentAsset.boughtQuantity * currentAsset.priceBought,
       0,
@@ -58,13 +80,14 @@ const PortfolioAssetsList = () => {
   };
 
   const onDeleteAsset = async (asset: any) => {
-    const newAssets = storageAssets.filter(
+    const newAssets = boughtAssets.filter(
       (coin, index) => coin.unique_id !== asset.item.unique_id,
     );
     const jsonValue = JSON.stringify(newAssets);
 
     await AsyncStorage.setItem('@portfolio_coins', jsonValue);
-    setStorageAssets(newAssets);
+    dispatch(fetchBoughtAssets());
+    //setStorageAssets(newAssets); recoil
   };
 
   const renderDeleteButton = (data: any) => {
@@ -86,7 +109,7 @@ const PortfolioAssetsList = () => {
 
   return (
     <SwipeListView
-      data={assets}
+      data={boughtAssets}
       renderItem={({item}) => <PortfolioAssetItem assetItem={item} />}
       rightOpenValue={-75}
       disableRightSwipe
