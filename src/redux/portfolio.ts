@@ -27,21 +27,16 @@ export const fetchBoughtAssets = createAsyncThunk(
         .join('%2C'),
     );
 
-    console.log('marketData', portfolioAssetsMarketData);
-
     const boughtAssets: any = boughtPortfolioAssets.map((boughtAsset: any) => {
       const portfolioAsset = portfolioAssetsMarketData.filter(
         (item: any) => boughtAsset.id === item.id,
       )[0];
-      console.log('portfolioAsset', portfolioAsset);
       return {
         ...boughtAsset,
         currentPrice: portfolioAsset.current_price,
         priceChangePercentage: portfolioAsset.price_change_percentage_24h,
       };
     });
-
-    console.log('detailed assets:', boughtAssets);
 
     return boughtAssets.sort(
       (item1: any, item2: any) =>

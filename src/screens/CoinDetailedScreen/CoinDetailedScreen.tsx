@@ -7,6 +7,8 @@ import {
   TextInput,
   ActivityIndicator,
 } from 'react-native';
+
+import {fetchWatchListCoinIds} from '../../redux/watchlist';
 import CoinDetailedHeader from './components/CoinDetailedHeader';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import styles from './styles';
@@ -17,6 +19,7 @@ import {CoinDetailedScreenRouteProp} from '../../navigation';
 import COLORS from '../../constants/colors';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import FilteredComponent from './components/FilterComponent';
+import {useDispatch} from 'react-redux';
 
 interface filterDay {
   filterDay: string;
@@ -40,6 +43,8 @@ const CoinDetailedScreen = () => {
   const [coinValue, setCoinValue] = useState<string>('1');
   const [usdValue, setUsdValue] = useState<string>('');
   const [selectedRange, setSelectedRange] = useState<string>('1');
+
+  const dispatch = useDispatch();
 
   const route = useRoute<CoinDetailedScreenRouteProp>();
   const {
@@ -70,6 +75,7 @@ const CoinDetailedScreen = () => {
   useEffect(() => {
     fetchCoinData();
     fetchMarketCoinData('1');
+    dispatch(fetchWatchListCoinIds());
   }, []);
 
   const changeCoinValue = (value: string) => {

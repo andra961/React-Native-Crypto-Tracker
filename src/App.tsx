@@ -14,34 +14,18 @@ import {StatusBar, StyleSheet, View} from 'react-native';
 import Navigation from './navigation';
 
 import {Provider} from 'react-redux';
-
-import WatchlistProvider from './contexts/WatchlistContext';
-
-import {RecoilRoot} from 'recoil';
 import COLORS from './constants/colors';
 import store from './redux';
-
-//replace with this to switch to recoil state
-/*<RecoilRoot>
-  <WatchlistProvider>
-    <StatusBar backgroundColor={COLORS.BACKGROUND} />
-    <View style={styles.container}>
-      <Navigation />
-    </View>
-  </WatchlistProvider>
-</RecoilRoot>*/
 
 const App = () => {
   return (
     <NavigationContainer
       theme={{colors: {background: COLORS.BACKGROUND}} as any}>
       <Provider store={store}>
-        <WatchlistProvider>
-          <StatusBar backgroundColor={COLORS.BACKGROUND} />
-          <View style={styles.container}>
-            <Navigation />
-          </View>
-        </WatchlistProvider>
+        <StatusBar backgroundColor={COLORS.BACKGROUND} />
+        <View style={styles.container}>
+          <Navigation />
+        </View>
       </Provider>
     </NavigationContainer>
   );

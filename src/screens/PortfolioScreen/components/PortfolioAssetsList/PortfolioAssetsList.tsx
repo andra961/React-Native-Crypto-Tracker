@@ -7,11 +7,6 @@ import styles from './styles';
 import PortfolioAssetItem from '../PortfolioAssetItem';
 import {useNavigation} from '@react-navigation/native';
 import {NavigateScreenProps} from '../../../../navigation/Navigation';
-import {useRecoilState, useRecoilValue} from 'recoil';
-import {
-  allPortfolioAssets,
-  allPortfolioBoughtAssetsInStorage,
-} from '../../../../atoms/PortfolioAssets';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../../../redux/store';
@@ -23,11 +18,6 @@ import COLORS from '../../../../constants/colors';
 
 const PortfolioAssetsList = () => {
   const navigation = useNavigation<NavigateScreenProps>();
-  //switch to recoil state
-  /*const [assets, setAssets] = useRecoilState(allPortfolioAssets);
-  const [storageAssets, setStorageAssets] = useRecoilState(
-    allPortfolioBoughtAssetsInStorage,
-  );*/
 
   const dispatch = useDispatch();
 
@@ -87,7 +77,6 @@ const PortfolioAssetsList = () => {
 
     await AsyncStorage.setItem('@portfolio_coins', jsonValue);
     dispatch(fetchBoughtAssets());
-    //setStorageAssets(newAssets); recoil
   };
 
   const renderDeleteButton = (data: any) => {

@@ -6,40 +6,54 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from 'react-native';
-import {useWatchList} from '../../contexts/WatchlistContext';
 
 import CoinItem from '../../components/CoinItem';
+
+import {fetchWatchListCoinIds} from '../../redux/watchlist';
+
+import {RootState} from '../../redux/store';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {getWatchListedCoins} from '../../services/requests';
 import COLORS from '../../constants/colors';
 
 const WatchListScreen = () => {
-  const {watchListCoinsIds} = useWatchList();
+  const dispatch = useDispatch();
+
+  const {watchlistCoins, loading} = useSelector(
+    (state: RootState) => state.watchlist,
+  );
+
+  useEffect(() => {
+    dispatch(fetchWatchListCoinIds());
+  }, []);
 
   const [coins, setCoins] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loadingCoins, setLoadingCoins] = useState<boolean>(false);
 
   const transformCoinsIds = () => {
-    return watchListCoinsIds.join('%2C');
+    return watchlistCoins.join('%2C');
   };
   const fetchWatchListedCoins = async () => {
-    if (loading) {
+    if (loadingCoins) {
       return;
     }
-    setLoading(true);
+    setLoadingCoins(true);
     const watchListedCoinsData = await getWatchListedCoins(transformCoinsIds());
 
     setCoins(watchListedCoinsData);
-    console.log('saved coins', watchListedCoinsData);
-    console.log('coins in state', coins);
-    setLoading(false);
+    setLoadingCoins(false);
   };
 
   useEffect(() => {
-    if (watchListCoinsIds.length > 0) fetchWatchListedCoins();
-  }, [watchListCoinsIds]);
+    if (watchlistCoins.length > 0) {
+      fetchWatchListedCoins();
+    } else {
+      setCoins([]);
+    }
+  }, [watchlistCoins]);
 
-  if (loading || !coins)
+  if (loading || loadingCoins || !coins)
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <ActivityIndicator size={'large'} />
@@ -54,7 +68,7 @@ const WatchListScreen = () => {
           marketCoin={item}
           refreshControl={
             <RefreshControl
-              refreshing={loading}
+              refreshing={loadingCoins}
               tintColor={COLORS.PRIMARY}
               onRefresh={fetchWatchListedCoins}
             />

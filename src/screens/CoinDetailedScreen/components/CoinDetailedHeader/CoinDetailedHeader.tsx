@@ -8,8 +8,15 @@ import {useNavigation} from '@react-navigation/native';
 import {NavigateScreenProps} from '../../../../navigation';
 
 import styles from './styles';
-import {useWatchList} from '../../../../contexts/WatchlistContext';
 import COLORS from '../../../../constants/colors';
+
+import {
+  fetchWatchListCoinIds,
+  storeWatchListCoinId,
+  removeWatchListCoinId,
+} from '../../../../redux/watchlist';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../../../redux/store';
 
 const CoinDetailedHeader = ({
   coinId,
@@ -23,21 +30,23 @@ const CoinDetailedHeader = ({
   marketCapRank: number;
 }) => {
   const navigation = useNavigation<NavigateScreenProps>();
-  const {watchListCoinsIds, storeWatchListCoinId, removeWatchListCoinId} =
-    useWatchList();
+
+  const dispatch = useDispatch();
+
+  const {watchlistCoins, loading} = useSelector(
+    (state: RootState) => state.watchlist,
+  );
 
   const checkIfCoinIsWatchListed = () => {
-    return watchListCoinsIds.some(
-      (coinIdValue: string) => coinIdValue === coinId,
-    );
+    return watchlistCoins.some((coinIdValue: string) => coinIdValue === coinId);
   };
 
   const handleWatchListCoin = () => {
     if (checkIfCoinIsWatchListed()) {
-      return removeWatchListCoinId(coinId);
+      return dispatch(removeWatchListCoinId(coinId));
     }
 
-    return storeWatchListCoinId(coinId);
+    return dispatch(storeWatchListCoinId(coinId));
   };
 
   return (

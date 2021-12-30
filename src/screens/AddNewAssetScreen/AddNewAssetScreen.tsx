@@ -8,8 +8,7 @@ import {
 } from 'react-native';
 
 import SearchableDropdown from 'react-native-searchable-dropdown';
-import {useRecoilState} from 'recoil';
-import {allPortfolioBoughtAssetsInStorage} from '../../atoms/PortfolioAssets';
+
 import {getAllCoins, getDetaliedCoinData} from '../../services/requests';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -30,11 +29,6 @@ const AddNewAssetScreen = () => {
   const [selectedCoinId, setSelectedCoinId] = useState<string | null>(null);
   const [boughtAssetQuantity, setBoughtAssetQuantity] = useState<string>('0');
   const [selectedCoin, setSelectedCoin] = useState<any>(null);
-
-  //recoil state
-  /*const [assetsInStorage, setAssetsInStorage] = useRecoilState<any>(
-    allPortfolioBoughtAssetsInStorage,
-  );*/
 
   const dispatch = useDispatch();
 
@@ -66,8 +60,6 @@ const AddNewAssetScreen = () => {
     console.log(newAssets);
     const jsonValue = JSON.stringify(newAssets);
     await AsyncStorage.setItem('@portfolio_coins', jsonValue);
-    //recoil state
-    //setAssetsInStorage(newAssets);
     dispatch(fetchBoughtAssets());
     navigation.goBack();
   };
