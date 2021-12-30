@@ -16,8 +16,6 @@ const PortfolioAssetItem = ({assetItem}: any) => {
     ticker,
   } = assetItem;
 
-  console.log('assetItem:', assetItem);
-
   const isChangePositive = () => priceChangePercentage >= 0;
 
   const renderHoldings = () => (boughtQuantity * currentPrice).toFixed(2);

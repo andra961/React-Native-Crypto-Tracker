@@ -2,7 +2,7 @@ import React, {Suspense, useEffect, useState} from 'react';
 import {
   View,
   Text,
-  Pressable,
+  TouchableOpacity,
   TextInput,
   ActivityIndicator,
 } from 'react-native';
@@ -57,7 +57,6 @@ const AddNewAssetScreen = () => {
     };
     const newAssets = [...boughtAssets, newAsset];
 
-    console.log(newAssets);
     const jsonValue = JSON.stringify(newAssets);
     await AsyncStorage.setItem('@portfolio_coins', jsonValue);
     dispatch(fetchBoughtAssets());
@@ -92,8 +91,6 @@ const AddNewAssetScreen = () => {
     if (selectedCoinId) {
       fetchCoinInfo();
     }
-
-    console.log('Selected coin is:', selectedCoinId);
   }, [selectedCoinId]);
 
   if (loading || loadingCoins || !boughtAssets)
@@ -137,7 +134,7 @@ const AddNewAssetScreen = () => {
               ${selectedCoin.market_data.current_price.usd} per coin
             </Text>
           </View>
-          <Pressable
+          <TouchableOpacity
             style={{
               ...styles.buttonContainer,
               backgroundColor: isQuantityEntered()
@@ -155,7 +152,7 @@ const AddNewAssetScreen = () => {
               }}>
               Add New Asset
             </Text>
-          </Pressable>
+          </TouchableOpacity>
         </>
       )}
     </View>

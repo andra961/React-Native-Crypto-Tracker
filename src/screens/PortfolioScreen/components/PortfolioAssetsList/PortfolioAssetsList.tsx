@@ -1,5 +1,11 @@
 import React, {useEffect} from 'react';
-import {View, Text, FlatList, Pressable, ActivityIndicator} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import styles from './styles';
@@ -81,7 +87,7 @@ const PortfolioAssetsList = () => {
 
   const renderDeleteButton = (data: any) => {
     return (
-      <Pressable
+      <TouchableOpacity
         style={{
           flex: 1,
           backgroundColor: COLORS.RED,
@@ -92,7 +98,7 @@ const PortfolioAssetsList = () => {
         }}
         onPress={() => onDeleteAsset(data)}>
         <FontAwesome name="trash-o" size={24} color={COLORS.PRIMARY} />
-      </Pressable>
+      </TouchableOpacity>
     );
   };
 
@@ -140,11 +146,11 @@ const PortfolioAssetsList = () => {
         </>
       }
       ListFooterComponent={
-        <Pressable
+        <TouchableOpacity
           style={styles.buttonContainer}
           onPress={() => navigation.navigate('AddNewAssetScreen')}>
           <Text style={styles.buttonText}> Add New Asset</Text>
-        </Pressable>
+        </TouchableOpacity>
       }
     />
   );

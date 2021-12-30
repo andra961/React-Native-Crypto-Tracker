@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Image,
-  Pressable,
+  TouchableOpacity,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -49,7 +49,7 @@ const CoinItem = ({marketCoin}: any) => {
   };
 
   return (
-    <Pressable
+    <TouchableOpacity
       style={styles.coinContainer}
       onPress={() => navigation.navigate('CoinDetailedScreen', {coinId: id})}>
       <Image
@@ -82,7 +82,7 @@ const CoinItem = ({marketCoin}: any) => {
           MCap {normalizeMarketCap(market_cap)}{' '}
         </Text>
       </View>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 

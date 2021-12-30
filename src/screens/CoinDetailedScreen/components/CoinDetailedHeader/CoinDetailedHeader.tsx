@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -51,12 +51,10 @@ const CoinDetailedHeader = ({
 
   return (
     <View style={styles.headerContainer}>
-      <Ionicons
-        name="chevron-back-sharp"
-        size={30}
-        color={COLORS.PRIMARY}
-        onPress={() => navigation.goBack()}
-      />
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Ionicons name="chevron-back-sharp" size={30} color={COLORS.PRIMARY} />
+      </TouchableOpacity>
+
       <View style={styles.tickerContainer}>
         <Image source={{uri: image}} style={{width: 25, height: 25}} />
         <Text style={styles.tickerTitle}>{symbol.toUpperCase()}</Text>
@@ -67,12 +65,13 @@ const CoinDetailedHeader = ({
           </Text>
         </View>
       </View>
-      <FontAwesome
-        name={checkIfCoinIsWatchListed() ? 'star' : 'star-o'}
-        size={25}
-        color={checkIfCoinIsWatchListed() ? COLORS.STAR : COLORS.PRIMARY}
-        onPress={handleWatchListCoin}
-      />
+      <TouchableOpacity onPress={handleWatchListCoin}>
+        <FontAwesome
+          name={checkIfCoinIsWatchListed() ? 'star' : 'star-o'}
+          size={25}
+          color={checkIfCoinIsWatchListed() ? COLORS.STAR : COLORS.PRIMARY}
+        />
+      </TouchableOpacity>
     </View>
   );
 };

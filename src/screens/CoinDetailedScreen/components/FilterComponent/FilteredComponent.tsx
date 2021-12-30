@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import {View, Text, Pressable} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import COLORS from '../../../../constants/colors';
 
 const FilteredComponent = ({
@@ -16,7 +16,7 @@ const FilteredComponent = ({
   const isFilterSelected = (filter: string) => filter === selectedRange;
 
   return (
-    <Pressable
+    <TouchableOpacity
       style={{
         paddingHorizontal: 10,
         paddingVertical: 5,
@@ -34,7 +34,7 @@ const FilteredComponent = ({
         }}>
         {filterText}
       </Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 
