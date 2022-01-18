@@ -1,5 +1,5 @@
 # React-Native-Crypto-Tracker
-A simple crypto tracker app made with React Native tested on Android
+A simple crypto tracker app made with React Native(typescript) and tested on Android using CoinGecko API
 
 ## Demo
 
