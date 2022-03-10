@@ -11,14 +11,14 @@ import CoinItem from '../../components/CoinItem';
 
 import {fetchWatchListCoinIds} from '../../redux/watchlist';
 
-import {RootState} from '../../redux/store';
-import {useDispatch, useSelector} from 'react-redux';
+import {RootState, useAppDispatch} from '../../redux/store';
+import {useSelector} from 'react-redux';
 
 import {getWatchListedCoins} from '../../services/requests';
 import COLORS from '../../constants/colors';
 
 const WatchListScreen = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const {watchlistCoins, loading} = useSelector(
     (state: RootState) => state.watchlist,

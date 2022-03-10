@@ -14,8 +14,8 @@ import PortfolioAssetItem from '../PortfolioAssetItem';
 import {useNavigation} from '@react-navigation/native';
 import {NavigateScreenProps} from '../../../../navigation/Navigation';
 
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../../../redux/store';
+import {useSelector} from 'react-redux';
+import {RootState, useAppDispatch} from '../../../../redux/store';
 import {fetchBoughtAssets} from '../../../../redux/portfolio';
 
 import {SwipeListView} from 'react-native-swipe-list-view';
@@ -25,7 +25,7 @@ import COLORS from '../../../../constants/colors';
 const PortfolioAssetsList = () => {
   const navigation = useNavigation<NavigateScreenProps>();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const {boughtAssets, loading} = useSelector(
     (state: RootState) => state.portfolio,

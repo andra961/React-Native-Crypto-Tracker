@@ -11,12 +11,11 @@ import styles from './styles';
 import COLORS from '../../../../constants/colors';
 
 import {
-  fetchWatchListCoinIds,
   storeWatchListCoinId,
   removeWatchListCoinId,
 } from '../../../../redux/watchlist';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../../../redux/store';
+import {useSelector} from 'react-redux';
+import {RootState, useAppDispatch} from '../../../../redux/store';
 
 const CoinDetailedHeader = ({
   coinId,
@@ -31,7 +30,7 @@ const CoinDetailedHeader = ({
 }) => {
   const navigation = useNavigation<NavigateScreenProps>();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const {watchlistCoins, loading} = useSelector(
     (state: RootState) => state.watchlist,

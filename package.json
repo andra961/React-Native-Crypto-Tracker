@@ -17,7 +17,7 @@
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
-    "@reduxjs/toolkit": "^1.7.1",
+    "@reduxjs/toolkit": "^1.8.0",
     "axios": "^0.24.0",
     "react": "17.0.2",
     "react-native": "0.66.4",
@@ -39,6 +39,7 @@
     "@babel/core": "^7.12.9",
     "@babel/runtime": "^7.12.5",
     "@react-native-community/eslint-config": "^2.0.0",
+    "@testing-library/react-native": "^9.0.0",
     "@types/jest": "^26.0.23",
     "@types/react-native": "^0.66.4",
     "@types/react-native-vector-icons": "^6.4.10",
@@ -66,6 +67,13 @@
       "jsx",
       "json",
       "node"
-    ]
+    ],
+    "setupFiles": [
+      "./jest.setup.js"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?@?react-native|@react-native-community|@react-navigation)"
+    ],
+    "verbose": true
   }
 }

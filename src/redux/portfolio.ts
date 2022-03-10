@@ -1,8 +1,9 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getWatchListedCoins} from '../services/requests';
+import {ThunkAPI} from './store';
 
-interface boughtAssets {
+export interface boughtAssets {
   id: string;
   unique_id: string;
   name: string;
@@ -14,9 +15,12 @@ interface boughtAssets {
   priceChangePercentage: string;
 }
 
-export const fetchBoughtAssets = createAsyncThunk(
-  '/portfolioAssets/fetchBoughtAssets',
-  async () => {
+export const fetchBoughtAssets = createAsyncThunk<
+  boughtAssets[],
+  void,
+  ThunkAPI
+>('/portfolioAssets/fetchBoughtAssets', async (_voidArg, {rejectWithValue}) => {
+  try {
     const assetsInStorage = await AsyncStorage.getItem('@portfolio_coins');
     const boughtPortfolioAssets =
       assetsInStorage != null ? JSON.parse(assetsInStorage) : [];
@@ -43,8 +47,12 @@ export const fetchBoughtAssets = createAsyncThunk(
         item1.quantityBought * item1.currentPrice <
         item2.quantityBought * item2.currentPrice,
     ) as boughtAssets[];
-  },
-);
+  } catch (e) {
+    if (e instanceof Error) console.log(e.message);
+    else console.log(e);
+    return rejectWithValue({errorMessage: 'failed'});
+  }
+});
 
 const portfolioSlice = createSlice({
   name: 'portfolioAssets',
@@ -65,8 +73,9 @@ const portfolioSlice = createSlice({
       state.boughtAssets = action.payload;
       state.loading = false;
     });
-    builder.addCase(fetchBoughtAssets.rejected, state => {
+    builder.addCase(fetchBoughtAssets.rejected, (state, action) => {
       state.loading = false;
+      console.log('fetchBoughtAssets', action.payload?.errorMessage);
     });
   },
 });

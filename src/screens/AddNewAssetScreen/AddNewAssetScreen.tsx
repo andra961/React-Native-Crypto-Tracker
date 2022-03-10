@@ -20,8 +20,8 @@ import {NavigateScreenProps} from '../../navigation';
 import uuid from 'react-native-uuid';
 import COLORS from '../../constants/colors';
 import {fetchBoughtAssets} from '../../redux/portfolio';
-import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../redux/store';
+import {useSelector} from 'react-redux';
+import {RootState, useAppDispatch} from '../../redux/store';
 
 const AddNewAssetScreen = () => {
   const [allCoins, setAllCoins] = useState([]);
@@ -30,7 +30,7 @@ const AddNewAssetScreen = () => {
   const [boughtAssetQuantity, setBoughtAssetQuantity] = useState<string>('0');
   const [selectedCoin, setSelectedCoin] = useState<any>(null);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const {boughtAssets, loading} = useSelector(
     (state: RootState) => state.portfolio,

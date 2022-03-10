@@ -19,7 +19,7 @@ import {CoinDetailedScreenRouteProp} from '../../navigation';
 import COLORS from '../../constants/colors';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import FilteredComponent from './components/FilterComponent';
-import {useDispatch} from 'react-redux';
+import {useAppDispatch} from '../../redux/store';
 
 interface filterDay {
   filterDay: string;
@@ -44,7 +44,7 @@ const CoinDetailedScreen = () => {
   const [usdValue, setUsdValue] = useState<string>('');
   const [selectedRange, setSelectedRange] = useState<string>('1');
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const route = useRoute<CoinDetailedScreenRouteProp>();
   const {
